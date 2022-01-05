@@ -2,8 +2,8 @@
 
 ## Problem
 >Write a program to remove all comments from a C program.
-Don't forget to handle quoted strings and character constants properly. C com-
-ments do not nest.
+Do not forget to handle quoted strings and character constants properly.
+C comments do not nest.
 
 ## What is a comment
 >Except within a character constant, a string literal, or a comment,
@@ -95,6 +95,8 @@ comment ??/
 that ??/
 ends ??/
 here.
+
+'??'/this will not be a comment/'
 ```
 
 So should these cases be handled? Well, they should, but not before the
@@ -140,11 +142,11 @@ Both solutions use only material taught thus far in the book.
 Variant `ex1-23_a` works using these rules. As such, the output will not be just
 comment removal, it will also contain trigraph replacement and line splicing.
 
-Variant `ex1-23_b` doesn't do line splicing and also reverts trigraph sequence
+Variant `ex1-23_b` does not do line splicing and also reverts trigraph sequence
 replacement.
 
 In my opinion variant `a` is more correct and cleaner. The code is more compact
-and doesn't have to deal with too many cases. Variant `b` has too many moving
+and does not have to deal with too many cases. Variant `b` has too many moving
 parts for what it does and was kind of beaten with a hammer to work.
 
 That being said, in the same tests their output was equivalent with the
@@ -190,8 +192,45 @@ int main(void)
     /* remember to return a value from main */
     return 0;
 }
+
+'??'/this is not a comment/'
 ```
 
 ### Output
 ```C
+"a//b"                             
+#include "//e"                     
+
+f = g /h;                       
+
+
+#define glue(x,y) x##y
+glue(/,/) k();                     
+  l();                        
+m = n
+   + p;                            
+
+/\
+ / j();                            
+
+char *test = "/* asa\
+dsa*/";
+
+char *test2 = "asdasd \" // asdasaasd";
+char *test3 = "asdas \' \" /*asdasd*/";
+
+
+char *p = "\\";
+ 
+
+#include <stdio.h>
+int main(void)
+{
+     
+    printf("%d\n", 6/'\2');
+     
+    return 0;
+}
+
+'??'/this is not a comment/'
 ```
